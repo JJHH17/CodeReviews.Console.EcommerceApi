@@ -25,7 +25,11 @@ namespace ECommerceApi.JJHH17.Controllers
         [HttpGet("{id}")]
         public ActionResult<Product> GetProduct(int id)
         {
-            return Ok(_productService.GetProductById(id));
+            var result = _productService.GetProductById(id);
+
+            if (result == null) { return NotFound(); }
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -37,13 +41,21 @@ namespace ECommerceApi.JJHH17.Controllers
         [HttpPut("{id}")]
         public ActionResult<Product> UpdateProduct(int id, Product updatedProduct)
         {
-            return Ok(_productService.UpdateProduct(id, updatedProduct));
+            var result = _productService.UpdateProduct(id, updatedProduct);
+
+            if (result == null) { return NotFound(); }
+
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<string> DeleteProduct(int id)
         {
-            return Ok(_productService.DeleteProduct(id));
+            var result = _productService.DeleteProduct(id);
+
+            if (result == null) { return NotFound(); }
+
+            return Ok(result);
         }
     }
 }
