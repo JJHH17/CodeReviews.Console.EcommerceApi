@@ -15,7 +15,6 @@ namespace ECommerceApi.JJHH17.Controllers
             _productService = productService;
         }
 
-        // Endpoints part of course
         [HttpGet]
         public ActionResult<List<Product>> GetAllProducts()
         {
