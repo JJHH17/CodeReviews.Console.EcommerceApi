@@ -1,12 +1,14 @@
-﻿using ECommerceApi.JJHH17.Models;
+﻿using ECommerceApi.JJHH17.Data;
+using ECommerceApi.JJHH17.Models;
 using ECommerceApi.JJHH17.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceApi.JJHH17.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    // Example route = http://localhost:5609/api/product/
+    // Example call: http://localhost:5609/api/product/
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -18,11 +20,11 @@ namespace ECommerceApi.JJHH17.Controllers
         [HttpGet]
         public ActionResult<List<Product>> GetAllProducts()
         {
-            return Ok(_productService.GetAllProducts());
+            return Ok(new List<Product>());
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Product> GetProduct(int id)
+        [HttpGet("{id)")]
+        public ActionResult<Product> GetProductById(int id)
         {
             var result = _productService.GetProductById(id);
 
