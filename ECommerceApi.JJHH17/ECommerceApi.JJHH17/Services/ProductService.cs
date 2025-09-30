@@ -1,5 +1,6 @@
 ﻿using ECommerceApi.JJHH17.Data;
 using ECommerceApi.JJHH17.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceApi.JJHH17.Services
 {
@@ -8,7 +9,7 @@ namespace ECommerceApi.JJHH17.Services
         public List<Product> GetAllProducts();
         public Product? GetProductById(int id);
         public Product CreateProduct(Product product);
-        public Product UpdateProduct(int id, Product product);
+        public Product UpdateProduct(int id, Product updatedProduct);
         public string? DeleteProduct(int id);
     }
 
@@ -45,7 +46,7 @@ namespace ECommerceApi.JJHH17.Services
             return _dbContext.Products.ToList();
         }
 
-        public Product GetProductById(int id)
+        public Product? GetProductById(int id)
         {
             Product savedProduct = _dbContext.Products.Find(id);
             return savedProduct;
