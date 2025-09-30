@@ -20,10 +20,10 @@ namespace ECommerceApi.JJHH17.Controllers
         [HttpGet]
         public ActionResult<List<Product>> GetAllProducts()
         {
-            return Ok(new List<Product>());
+            return Ok(_productService.GetAllProducts());
         }
 
-        [HttpGet("{id)")]
+        [HttpGet("{id}")]
         public ActionResult<Product> GetProductById(int id)
         {
             var result = _productService.GetProductById(id);
