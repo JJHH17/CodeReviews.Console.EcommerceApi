@@ -33,7 +33,7 @@ namespace ECommerceApi.JJHH17.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Category> CreateCategory(Category category)
+        public ActionResult<CreateCategoryDto> CreateCategory(CreateCategoryDto category)
         {
             return Ok(_categoryService.CreateCategory(category));
         }
