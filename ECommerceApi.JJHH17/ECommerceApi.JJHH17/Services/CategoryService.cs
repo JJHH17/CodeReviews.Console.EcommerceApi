@@ -7,7 +7,7 @@ namespace ECommerceApi.JJHH17.Services
     {
         public List<Category> GetAllCategories();
         public Category GetCategoryById(int id);
-        public Category CreateCategory(Category category);
+        public Category CreateCategory(CreateCategoryDto category);
     }
 
     public class CategoryService : ICategoryService
@@ -30,11 +30,20 @@ namespace ECommerceApi.JJHH17.Services
             return savedCategory;
         }
 
-        public Category CreateCategory(Category category)
+        public Category CreateCategory(CreateCategoryDto category)
         {
-            var savedCategory = _dbContext.Categories.Add(category);
+            if (string.IsNullOrWhiteSpace(category.Name))
+                throw new ArgumentException("Category name is required.", nameof(category));
+
+            bool exists = _dbContext.Categories.Any(c => c.CategoryName == category.Name);
+            if (exists)
+                throw new InvalidOperationException($"Category {category.Name} already exists");
+
+            var newCategory = new Category { CategoryName = category.Name.Trim() };
+
+            _dbContext.Categories.Add(newCategory);
             _dbContext.SaveChanges();
-            return savedCategory.Entity;
+            return newCategory;
         }
     }
 }
