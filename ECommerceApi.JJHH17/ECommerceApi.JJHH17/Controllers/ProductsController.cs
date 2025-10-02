@@ -34,7 +34,7 @@ namespace ECommerceApi.JJHH17.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Product> CreateProduct(Product product)
+        public ActionResult<CreateProductDto> CreateProduct(CreateProductDto product)
         {
             return Ok(_productService.CreateProduct(product));
         }
