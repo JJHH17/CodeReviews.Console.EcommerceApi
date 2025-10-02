@@ -8,7 +8,7 @@ namespace ECommerceApi.JJHH17.Services
     {
         public List<Product> GetAllProducts();
         public Product? GetProductById(int id);
-        public Product CreateProduct(Product product);
+        public Product CreateProduct(CreateProductDto product);
         public Product UpdateProduct(int id, Product updatedProduct);
         public string? DeleteProduct(int id);
     }
@@ -22,11 +22,16 @@ namespace ECommerceApi.JJHH17.Services
             _dbContext = dbContext;
         }
 
-        public Product CreateProduct(Product product)
+        public Product CreateProduct(CreateProductDto product)
         {
-            var savedProduct = _dbContext.Products.Add(product);
+            if (product == null) 
+                throw new ArgumentNullException("Product name is required.",nameof(product));
+            
+            var newProduct = new Product { ProductName = product.name.Trim(), Price = product.price, CategoryId = product.CategoryId};
+
+            _dbContext.Products.Add(newProduct);
             _dbContext.SaveChanges();
-            return savedProduct.Entity;
+            return newProduct;
         }
 
         public string? DeleteProduct(int id)
