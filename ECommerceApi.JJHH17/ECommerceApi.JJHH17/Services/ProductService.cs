@@ -6,7 +6,7 @@ namespace ECommerceApi.JJHH17.Services
 {
     public interface IProductService
     {
-        public List<Product> GetAllProducts();
+        public List<GetProductsDto> GetAllProducts();
         public Product? GetProductById(int id);
         public Product CreateProduct(CreateProductDto product);
         public Product UpdateProduct(int id, Product updatedProduct);
@@ -46,9 +46,18 @@ namespace ECommerceApi.JJHH17.Services
             return $"Successfully deleted product with ID: {id}";
         }
 
-        public List<Product> GetAllProducts()
+        public List<GetProductsDto> GetAllProducts()
         {
-            return _dbContext.Products.ToList();
+            return _dbContext.Products
+                .AsNoTracking()
+                .Include(p => p.Category)
+                .Select(p => new GetProductsDto(
+                    p.ProductId,
+                    p.ProductName,
+                    p.Price,
+                    p.CategoryId,
+                    p.Category.CategoryName))
+                .ToList();
         }
 
         public Product? GetProductById(int id)
