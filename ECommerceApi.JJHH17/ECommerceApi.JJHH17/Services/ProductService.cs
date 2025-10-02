@@ -1,5 +1,6 @@
 ﻿using ECommerceApi.JJHH17.Data;
 using ECommerceApi.JJHH17.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
@@ -8,7 +9,7 @@ namespace ECommerceApi.JJHH17.Services
     public interface IProductService
     {
         public List<GetProductsDto> GetAllProducts();
-        public Product? GetProductById(int id);
+        public GetProductsDto? GetProductById(int id);
         public GetProductsDto CreateProduct(CreateProductDto product);
     }
 
@@ -62,10 +63,21 @@ namespace ECommerceApi.JJHH17.Services
                 .ToList();
         }
 
-        public Product? GetProductById(int id)
+        public GetProductsDto GetProductById(int id)
         {
-            Product savedProduct = _dbContext.Products.Find(id);
-            return savedProduct;
+            var productItem = _dbContext.Products.Find(id);
+
+            if (productItem == null)
+            {
+                return null;
+            }
+
+            return _dbContext.Products
+                .AsNoTracking()
+                .Where(p => p.ProductId == id)
+                .Select(p => new GetProductsDto(
+                    p.ProductId, p.ProductName, p.Price, p.CategoryId, p.Category.CategoryName))
+                .Single();
         }
     }
 }
