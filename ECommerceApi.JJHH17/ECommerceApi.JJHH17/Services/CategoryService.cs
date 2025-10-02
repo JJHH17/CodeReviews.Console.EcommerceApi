@@ -1,11 +1,12 @@
 ﻿using ECommerceApi.JJHH17.Data;
 using ECommerceApi.JJHH17.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceApi.JJHH17.Services
 {
     public interface ICategoryService
     {
-        public List<Category> GetAllCategories();
+        public List<CategoryWithProductsDto> GetAllCategories();
         public Category GetCategoryById(int id);
         public Category CreateCategory(CreateCategoryDto category);
     }
@@ -19,9 +20,20 @@ namespace ECommerceApi.JJHH17.Services
             _dbContext = dbContext;
         }
 
-        public List<Category> GetAllCategories()
+        public List<CategoryWithProductsDto> GetAllCategories()
         {
-            return _dbContext.Categories.ToList();
+            return _dbContext.Categories
+                .AsNoTracking()
+                .OrderBy(c => c.CategoryName)
+                .Select(c => new CategoryWithProductsDto(
+                    c.CategoryId,
+                    c.CategoryName,
+                    c.Products
+                        .OrderBy(p => p.ProductName)
+                        .Select(p => new ProductDto(p.ProductId, p.ProductName, p.Price))
+                        .ToList()
+                        ))
+                .ToList();
         }
 
         public Category? GetCategoryById(int id)
