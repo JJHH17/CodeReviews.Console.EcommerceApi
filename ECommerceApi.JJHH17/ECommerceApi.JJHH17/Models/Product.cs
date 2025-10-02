@@ -9,4 +9,6 @@
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
     }
+
+    public record CreateProductDto(string name, decimal price, int CategoryId);
 }
