@@ -18,7 +18,7 @@ namespace ECommerceApi.JJHH17.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Product>> GetAllProducts()
+        public ActionResult<List<GetProductsDto>> GetAllProducts()
         {
             return Ok(_productService.GetAllProducts());
         }
