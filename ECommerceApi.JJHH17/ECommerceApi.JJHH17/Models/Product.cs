@@ -10,7 +10,7 @@
         public Category Category { get; set; } = null!;
     }
 
-    public record CreateProductDto(string name, decimal price, int CategoryId);
+    public record CreateProductDto(string name, decimal price, int categoryId);
 
     public record GetProductsDto(int productId, string productName, decimal price, int CategoryId, string CategoryName);
 }
