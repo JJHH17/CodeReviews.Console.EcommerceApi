@@ -38,25 +38,5 @@ namespace ECommerceApi.JJHH17.Controllers
         {
             return Ok(_productService.CreateProduct(product));
         }
-
-        [HttpPut("{id}")]
-        public ActionResult<Product> UpdateProduct(int id, Product updatedProduct)
-        {
-            var result = _productService.UpdateProduct(id, updatedProduct);
-
-            if (result == null) { return NotFound(); }
-
-            return Ok(result);
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult<string> DeleteProduct(int id)
-        {
-            var result = _productService.DeleteProduct(id);
-
-            if (result == null) { return NotFound(); }
-
-            return Ok(result);
-        }
     }
 }
