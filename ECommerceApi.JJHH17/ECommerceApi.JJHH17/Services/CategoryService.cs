@@ -7,7 +7,7 @@ namespace ECommerceApi.JJHH17.Services
     public interface ICategoryService
     {
         public List<CategoryWithProductsDto> GetAllCategories();
-        public Category GetCategoryById(int id);
+        public CategoryWithProductsDto GetCategoryById(int id);
         public Category CreateCategory(CreateCategoryDto category);
     }
 
@@ -36,10 +36,20 @@ namespace ECommerceApi.JJHH17.Services
                 .ToList();
         }
 
-        public Category? GetCategoryById(int id)
+        public CategoryWithProductsDto GetCategoryById(int id)
         {
-            Category savedCategory = _dbContext.Categories.Find(id);
-            return savedCategory;
+            return _dbContext.Categories
+                .AsNoTracking()
+                .Where(p => p.CategoryId == id)
+                .Select(p => new CategoryWithProductsDto(
+                    p.CategoryId,
+                    p.CategoryName,
+                    p.Products
+                        .OrderBy(pr => pr.ProductName)
+                        .Select(pr => new ProductDto(pr.ProductId, pr.ProductName, pr.Price))
+                        .ToList()
+                        ))
+                .Single();
         }
 
         public Category CreateCategory(CreateCategoryDto category)
