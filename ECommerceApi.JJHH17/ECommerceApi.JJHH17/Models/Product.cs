@@ -11,4 +11,6 @@
     }
 
     public record CreateProductDto(string name, decimal price, int CategoryId);
+
+    public record GetProductsDto(int productId, string productName, decimal price, int CategoryId, string CategoryName);
 }
