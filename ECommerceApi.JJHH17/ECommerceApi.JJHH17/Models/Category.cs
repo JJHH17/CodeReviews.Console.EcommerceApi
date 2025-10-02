@@ -8,4 +8,8 @@
     }
 
     public record CreateCategoryDto(string Name);
+
+    public record ProductDto(int ProductId, string ProductName, decimal Price);
+
+    public record CategoryWithProductsDto(int CategoryId, string CategoryName, IReadOnlyList<ProductDto> Products);
 }
