@@ -10,8 +10,6 @@ namespace ECommerceApi.JJHH17.Services
         public List<GetProductsDto> GetAllProducts();
         public Product? GetProductById(int id);
         public GetProductsDto CreateProduct(CreateProductDto product);
-        public Product UpdateProduct(int id, Product updatedProduct);
-        public string? DeleteProduct(int id);
     }
 
     public class ProductService : IProductService
@@ -50,18 +48,6 @@ namespace ECommerceApi.JJHH17.Services
                 .Single();
         }
 
-        public string? DeleteProduct(int id)
-        {
-            Product savedProduct = _dbContext.Products.Find(id);
-
-            if (savedProduct == null) { return null; }
-
-            _dbContext.Products.Remove(savedProduct);
-            _dbContext.SaveChanges();
-
-            return $"Successfully deleted product with ID: {id}";
-        }
-
         public List<GetProductsDto> GetAllProducts()
         {
             return _dbContext.Products
@@ -79,18 +65,6 @@ namespace ECommerceApi.JJHH17.Services
         public Product? GetProductById(int id)
         {
             Product savedProduct = _dbContext.Products.Find(id);
-            return savedProduct;
-        }
-
-        public Product UpdateProduct(int id, Product product)
-        {
-            Product savedProduct = _dbContext.Products.Find(id);
-
-            if (savedProduct == null) { return null; }
-
-            _dbContext.Entry(savedProduct).CurrentValues.SetValues(product);
-            _dbContext.SaveChanges();
-
             return savedProduct;
         }
     }
