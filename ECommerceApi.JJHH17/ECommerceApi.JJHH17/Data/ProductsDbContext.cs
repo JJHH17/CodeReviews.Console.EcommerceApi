@@ -18,6 +18,10 @@ namespace ECommerceApi.JJHH17.Data
                 .WithMany(e => e.Products)
                 .HasForeignKey(e => e.CategoryId)
                 .IsRequired();
+
+            modelBuilder.Entity<Sale>()
+                .HasMany(e => e.Products)
+                .WithMany(e => e.Sales);
         }
     }
 }
