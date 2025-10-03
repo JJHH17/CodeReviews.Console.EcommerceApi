@@ -8,6 +8,7 @@
 
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
+        public List<Sale> Sales { get; } = [];
     }
 
     public record CreateProductDto(string name, decimal price, int categoryId);
