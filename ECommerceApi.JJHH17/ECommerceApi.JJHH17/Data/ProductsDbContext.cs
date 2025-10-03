@@ -10,6 +10,7 @@ namespace ECommerceApi.JJHH17.Data
 
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Sale> Sales => Set<Sale>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
