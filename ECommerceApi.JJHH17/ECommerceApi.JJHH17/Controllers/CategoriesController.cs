@@ -17,9 +17,21 @@ namespace ECommerceApi.JJHH17.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Category>> GetAllCategories()
+        public ActionResult<PagedResponse<CategoryWithProductsDto>> GetAllCategories([FromQuery] Pagination pagination)
         {
-            return Ok(_categoryService.GetAllCategories());
+            if (pagination.PageNumber < 1) pagination.PageNumber = 1;
+            if (pagination.PageSize < 1) pagination.PageSize = 10;
+
+            var allCategories = _categoryService.GetAllCategories();
+
+            var totalRecords = allCategories.Count;
+            var pagedData = allCategories
+                .OrderBy(c => c.CategoryId)
+                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+                .Take(pagination.PageSize)
+                .ToList();
+
+            return Ok(pagedData);
         }
 
         [HttpGet("{id}")]
