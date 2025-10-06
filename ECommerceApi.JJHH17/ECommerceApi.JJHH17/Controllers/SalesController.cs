@@ -36,19 +36,34 @@ namespace ECommerceApi.JJHH17.Controllers
         [HttpPost]
         public ActionResult<SaleWithProductsDto> CreateSale([FromBody] CreateSaleDto sale)
         {
-            var created = _saleService.CreateSale(sale);
+            try
+            {
+                var created = _saleService.CreateSale(sale);
 
-            var dto = new SaleWithProductsDto(
-                created.SaleId,
-                created.ItemCount,
-                created.SalePrice,
-                created.Products
-                    .OrderBy(p => p.ProductName)
-                    .Select(p => new ProductDto(p.ProductId, p.ProductName, p.Price))
-                    .ToList()
-                );
+                var dto = new SaleWithProductsDto(
+                    created.SaleId,
+                    created.ItemCount,
+                    created.SalePrice,
+                    created.Products
+                        .OrderBy(p => p.ProductName)
+                        .Select(p => new ProductDto(p.ProductId, p.ProductName, p.Price))
+                        .ToList()
+                    );
 
-            return CreatedAtAction(nameof(GetSaleById), new { id = created.SaleId }, dto);
+                return CreatedAtAction(nameof(GetSaleById), new { id = created.SaleId }, dto);
+            }
+            catch (ArgumentNullException e)
+            {
+                return BadRequest(new { error = e.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
         }
     }
 }
