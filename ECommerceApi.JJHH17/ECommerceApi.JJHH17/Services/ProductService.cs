@@ -77,7 +77,7 @@ namespace ECommerceApi.JJHH17.Services
                 .Where(p => p.ProductId == id)
                 .Select(p => new GetProductsDto(
                     p.ProductId, p.ProductName, p.Price, p.CategoryId, p.Category.CategoryName))
-                .Single();
+                .SingleOrDefault();
         }
     }
 }

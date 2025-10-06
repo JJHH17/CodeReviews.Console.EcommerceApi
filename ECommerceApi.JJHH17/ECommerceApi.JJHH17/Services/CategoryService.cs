@@ -49,7 +49,7 @@ namespace ECommerceApi.JJHH17.Services
                         .Select(pr => new ProductDto(pr.ProductId, pr.ProductName, pr.Price))
                         .ToList()
                         ))
-                .Single();
+                .SingleOrDefault();
         }
 
         public Category CreateCategory(CreateCategoryDto category)
@@ -57,7 +57,7 @@ namespace ECommerceApi.JJHH17.Services
             if (string.IsNullOrWhiteSpace(category.Name))
                 throw new ArgumentException("Category name is required.", nameof(category));
 
-            bool exists = _dbContext.Categories.Any(c => c.CategoryName == category.Name);
+            bool exists = _dbContext.Categories.Any(c => c.CategoryName.ToLower() == category.Name.ToLower());
             if (exists)
                 throw new InvalidOperationException($"Category {category.Name} already exists");
 

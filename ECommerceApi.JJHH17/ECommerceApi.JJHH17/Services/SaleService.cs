@@ -50,7 +50,7 @@ namespace ECommerceApi.JJHH17.Services
                         .Select(pr => new ProductDto(pr.ProductId, pr.ProductName, pr.Price))
                         .ToList()
                         ))
-                .Single();
+                .SingleOrDefault();
         }
 
         public Sale CreateSale(CreateSaleDto sale)
@@ -71,7 +71,7 @@ namespace ECommerceApi.JJHH17.Services
                 .ToList();
 
             var foundId = products.Select(p => p.ProductId).ToHashSet();
-            var missing = uniqueId.Where(id =>  !foundId.Contains(id)).ToList();
+            var missing = uniqueId.Where(id => !foundId.Contains(id)).ToList();
             if (missing.Count > 0)
             {
                 throw new InvalidOperationException($"Unknown product ID's {string.Join(", ", missing)}");
