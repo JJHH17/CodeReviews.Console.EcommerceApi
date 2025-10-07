@@ -18,9 +18,21 @@ namespace ECommerceApi.JJHH17.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<GetProductsDto>> GetAllProducts()
+        public ActionResult<PagedResponse<GetProductsDto>> GetAllProducts([FromQuery] Pagination pagination)
         {
-            return Ok(_productService.GetAllProducts());
+            if (pagination.PageNumber < 1) pagination.PageNumber = 1;
+            if (pagination.PageSize < 1) pagination.PageSize = 10;
+
+            var allProducts = _productService.GetAllProducts();
+
+            var totalRecords = allProducts.Count;
+            var pagedData = allProducts
+                .OrderBy(c => c.productId)
+                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+                .Take(pagination.PageSize)
+                .ToList();
+
+            return Ok(pagedData);
         }
 
         [HttpGet("{id}")]
