@@ -1,8 +1,6 @@
 ﻿using ECommerceApi.JJHH17.Models;
 using ECommerceApi.JJHH17.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace ECommerceApi.JJHH17.Controllers
 {
