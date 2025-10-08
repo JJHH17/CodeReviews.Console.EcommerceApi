@@ -35,8 +35,14 @@ Once done, run the .sln file and run the project - you'll be directed to Swagger
 
 ## Endpoints and usage
 - Product endpoints (GET, GET ID, POST) - Allows the client to get a list of, a single, or create individual products.
+<img width="170" height="125" alt="image" src="https://github.com/user-attachments/assets/8227bf61-53e1-49e0-a8d8-c331b0807b6e" />
+
 - Sale endpoints (GET, GET ID, POST) - Allows the client to get a list of, a single, or create individual sales.
+<img width="170" height="125" alt="image" src="https://github.com/user-attachments/assets/b71e0260-8b05-4d91-b1ea-0ff684ac7bd9" />
+
 - Category endpoints (GET, GET ID, POST) - Allows the client to get a list of, a single, or create individual categories.
+<img width="170" height="125" alt="image" src="https://github.com/user-attachments/assets/bc817acc-3018-473b-8b41-0164b84741e3" />
+
 
 ## Key takeaways and learnings from project
 This was a great and challenging project to complete - initially, I had a few blockers with understanding how to configure many to many (as well as one to many) relationships within Entity Framework and then mapping them for my API endpoints.
